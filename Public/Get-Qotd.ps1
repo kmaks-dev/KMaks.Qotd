@@ -5,8 +5,7 @@ function Get-Qotd {
     begin {}
     
     process {
-        $Quote = Get-Random -InputObject $Quotes
-        $Quote.ToString()
+        [Quote]::new((Get-Random -InputObject $Quotes)).ToString()
     }
     
     end {}
