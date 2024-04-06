@@ -1,4 +1,5 @@
 function Get-Qotd {
+    [Alias('Get-Quote')]
     [CmdletBinding()]
     param ()
     
