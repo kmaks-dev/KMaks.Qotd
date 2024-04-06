@@ -1,5 +1,5 @@
 class Quote {
-    [string] $Author
+    [string[]] $Author
     [string[]] $Quote
     
     Quote([string]$Author, [string[]]$Quote) {
@@ -12,12 +12,37 @@ class Quote {
     }
 
     [string] ToString() {
+        # Source: https://learn.microsoft.com/en-us/windows/console/console-virtual-terminal-sequences#text-formatting
+        # 0 - Default
+        # 1 - Bold/Bright
+        # 2 - Dimmed
+        # 3 - Italic
+        # 4 - Underline
+        # 5 - Blinking
+        # 6 - Fast blinking (not supported in Windows Terminal)
+        # 7 - Inverse color
         $ResetStyle = "`e[0m"
-        $DimmedStyle = "`e[2m"
-        $DimmedItalicStyle = "`e[2;3m"
+        $QuoteStyle = "`e[1;3m"
+        $AuthorStyle = "`e[3;7m"
+
+        $Length = $this.Quote | Measure-Object -Maximum -Property Length | Select-Object -ExpandProperty Maximum
+        $Margin = 4
         [array] $QuoteStringArray = @()
-        $QuoteStringArray += $this.Quote.ForEach({ "`t" + $DimmedStyle + $_ + $ResetStyle })
-        $QuoteStringArray += $this.Author.ForEach({ "`t`t" + $DimmedItalicStyle + "~" + $_ + $ResetStyle })
+        $QuoteStringArray += ""
+        $QuoteStringArray += $this.Quote.ForEach({
+            " " * $Margin +
+            $QuoteStyle +
+            $_ +
+            $ResetStyle
+        })
+        $QuoteStringArray += ""
+        $QuoteStringArray += $this.Author.ForEach({
+            $AuthorStyle +
+            "~" +
+            $_ +
+            $ResetStyle
+        }).PadLeft($Margin + $AuthorStyle.Length + $Length + $ResetStyle.Length)
+        $QuoteStringArray += ""
 
         return $QuoteStringArray -join "`n"
     }
