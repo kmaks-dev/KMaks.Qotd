@@ -23,25 +23,20 @@ class Quote {
         # 7 - Inverse color
         $ResetStyle = "`e[0m"
         $QuoteStyle = "`e[1;3m"
-        $AuthorStyle = "`e[3;7m"
+        $AuthorStyle = "`e[3m"
 
-        $Length = $this.Quote | Measure-Object -Maximum -Property Length | Select-Object -ExpandProperty Maximum
+        $QuoteLength = $this.Quote | Measure-Object -Maximum -Property Length | Select-Object -ExpandProperty Maximum
         $Margin = 4
+
         [array] $QuoteStringArray = @()
         $QuoteStringArray += ""
         $QuoteStringArray += $this.Quote.ForEach({
-            " " * $Margin +
-            $QuoteStyle +
-            $_ +
-            $ResetStyle
+            " " * $Margin + $QuoteStyle + $_ + $ResetStyle
         })
         $QuoteStringArray += ""
         $QuoteStringArray += $this.Author.ForEach({
-            $AuthorStyle +
-            "~" +
-            $_ +
-            $ResetStyle
-        }).PadLeft($Margin + $AuthorStyle.Length + $Length + $ResetStyle.Length)
+            $AuthorStyle + $_ + $ResetStyle
+        }).PadLeft($Margin + $AuthorStyle.Length + $QuoteLength + $ResetStyle.Length)
         $QuoteStringArray += ""
 
         return $QuoteStringArray -join "`n"
