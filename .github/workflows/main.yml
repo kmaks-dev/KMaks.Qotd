@@ -1,4 +1,4 @@
-name: "Publish to PSGallery."
+name: "Publish to PSGallery"
 
 # Controls when the action will run.
 on:
