@@ -1,4 +1,5 @@
- workflow_dispatch:
+on:
+  workflow_dispatch:
     inputs:
       modulePath:
         description: "Provide the module path that includes .psd1"
