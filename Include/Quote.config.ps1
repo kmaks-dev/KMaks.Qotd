@@ -51,7 +51,7 @@ $Quotes = @(
         Author = "Immanuel Kant"
         Language = "English"
         Quote = "May you live your life as if the maxim of your actions",
-                " were to become universal law."
+                "were to become universal law."
     },
     @{
         Author = "Harlan Ellison"
